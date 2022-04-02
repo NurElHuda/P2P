@@ -24,8 +24,8 @@ if __name__ == "__main__":
         raise
 
     # This allows easy placement of apps within the interior
-    # class_manager directory.
+    # system73_app directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / "class_manager"))
+    sys.path.append(str(current_path / "system73_app"))
 
     execute_from_command_line(sys.argv)

@@ -8,8 +8,8 @@ from pathlib import Path
 import environ
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# class_manager/
-APPS_DIR = ROOT_DIR / "class_manager"
+# system73_app/
+APPS_DIR = ROOT_DIR / "system73_app"
 env = environ.Env()
 env.read_env(str(ROOT_DIR / ".env"))
 
