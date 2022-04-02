@@ -1,0 +1,276 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/admins/:
+    get:
+      operationId: listAdmins
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    user:
+                      properties:
+                        username:
+                          type: string
+                          description: Required. 150 characters or fewer. Letters,
+                            digits and @/./+/-/_ only.
+                          pattern: ^[\w.@+-]+\Z
+                          maxLength: 150
+                        password:
+                          type: string
+                          writeOnly: true
+                          maxLength: 128
+                        name:
+                          type: string
+                          maxLength: 255
+                        email:
+                          type: string
+                          format: email
+                          maxLength: 254
+                      required:
+                      - username
+                      - password
+                      type: object
+                  required:
+                  - user
+          description: ''
+  /api/managers/:
+    get:
+      operationId: listManagers
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    user:
+                      type: integer
+                    center:
+                      properties: {}
+                      type: object
+                  required:
+                  - user
+                  - center
+          description: ''
+    post:
+      operationId: CreateManager
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id001
+              properties:
+                user:
+                  type: integer
+                center:
+                  properties: {}
+                  type: object
+              required:
+              - user
+              - center
+          application/x-www-form-urlencoded:
+            schema: *id001
+          multipart/form-data:
+            schema: *id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  center:
+                    properties: {}
+                    type: object
+                required:
+                - user
+                - center
+          description: ''
+  /api/agents/:
+    get:
+      operationId: listAgents
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    user:
+                      type: integer
+                    center:
+                      properties: {}
+                      type: object
+                  required:
+                  - user
+                  - center
+          description: ''
+    post:
+      operationId: CreateAgent
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                user:
+                  type: integer
+                center:
+                  properties: {}
+                  type: object
+              required:
+              - user
+              - center
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  center:
+                    properties: {}
+                    type: object
+                required:
+                - user
+                - center
+          description: ''
+  /api/teachers/:
+    get:
+      operationId: listTeachers
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    user:
+                      type: integer
+                    center:
+                      properties: {}
+                      type: object
+                  required:
+                  - user
+                  - center
+          description: ''
+    post:
+      operationId: CreateTeacher
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                user:
+                  type: integer
+                center:
+                  properties: {}
+                  type: object
+              required:
+              - user
+              - center
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  center:
+                    properties: {}
+                    type: object
+                required:
+                - user
+                - center
+          description: ''
+  /api/students/:
+    get:
+      operationId: listStudents
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    user:
+                      type: integer
+                    center:
+                      properties: {}
+                      type: object
+                  required:
+                  - user
+                  - center
+          description: ''
+    post:
+      operationId: CreateStudent
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                user:
+                  type: integer
+                center:
+                  properties: {}
+                  type: object
+              required:
+              - user
+              - center
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user:
+                    type: integer
+                  center:
+                    properties: {}
+                    type: object
+                required:
+                - user
+                - center
+          description: ''
