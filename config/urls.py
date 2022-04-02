@@ -20,7 +20,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path("", include("system73_app.api.urls", namespace="api")),
+    path("", include("system73_app.urls", namespace="api")),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
