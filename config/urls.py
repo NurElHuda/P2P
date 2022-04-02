@@ -1,16 +1,10 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -26,13 +20,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    # Django Admin, use {% url 'admin:index' %}
-    path(settings.ADMIN_URL, admin.site.urls),
-    # Your stuff: custom urls includes go here
     path("", include("system73_app.api.urls", namespace="api")),
-    path("auth/token/basic/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("auth/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

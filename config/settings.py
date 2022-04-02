@@ -36,7 +36,6 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",  
-    "django.contrib.admin",
     "django.forms",
     "drf_yasg",
     "corsheaders",
@@ -119,8 +118,6 @@ CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 
 X_FRAME_OPTIONS = "DENY"
-
-ADMIN_URL = "admin/"
 
 ADMINS = [("""Nour Tine""", "tinenourelhouda@gmail.com")]
 
