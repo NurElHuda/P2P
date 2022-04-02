@@ -14,10 +14,10 @@ from rest_framework_simplejwt.views import (
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Class Manager API",
+        title="System73 API",
         default_version="v1",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="classmanager.contact@gmail.com"),
+        contact=openapi.Contact(email="tinenourelhouda@@gmail.com"),
         license=openapi.License(name="Propritary License"),
     ),
     public=True,
@@ -29,7 +29,7 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # Your stuff: custom urls includes go here
-    path("", include("app_src.api.urls", namespace="api")),
+    path("", include("system73_app.api.urls", namespace="api")),
     path("auth/token/basic/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("auth/token/verify/", TokenVerifyView.as_view(), name="token_verify"),

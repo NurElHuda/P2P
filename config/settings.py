@@ -2,16 +2,12 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-import environ
-
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 APPS_DIR = ROOT_DIR / "system73_app"
-env = environ.Env()
-env.read_env(str(ROOT_DIR / ".env"))
 
-DEBUG = env.bool("DJANGO_DEBUG", False)
-LOCAL = env.bool("DJANGO_LOCAL", False)
+DEBUG = True
+SECRET_KEY = "g0fh$3_vbd%5(a@f)z5_fbmd%6@ag^8dlrv5-0+n62n_*5iu8b"
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "*"]
 
 SITE_ID = 1
@@ -35,7 +31,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DJANGO_APPS = [
     "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.messages",
@@ -49,15 +44,13 @@ DJANGO_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "django_extensions",
-    "app_src.api.apps.ApiConfig",
+    "system73_app",
 ]
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "guardian.backends.ObjectPermissionBackend"
-]
-
-AUTH_USER_MODEL = "api.User"
+]   
 
 
 PASSWORD_HASHERS = [ 
@@ -65,15 +58,6 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
-]
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
@@ -121,7 +105,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "app_src.utils.context_processors.settings_context",
             ],
         },
     }
@@ -174,7 +157,6 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-    "DEFAULT_PAGINATION_CLASS": "app_src.api.paginators.CustomPagination",
     "PAGE_SIZE": 20,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "DEFAULT_PARSER_CLASSES": [
