@@ -12,17 +12,17 @@ urlpatterns = [
         name="network-list",
     ),
     path(
-        "networks/status/",
+        "networks/<network_id:int>/status/",
         views.NetworkStatus.as_view(),
         name="network-status",
     ),
     path(
-        "networks/connection/",
+        "networks/<network_id:int>/connection/",
         views.NetworkConnectionCreate.as_view(),
-        name="network-connection-destroy",
+        name="network-connection-create",
     ),
     path(
-        "networks/connection/",
+        "networks/<network_id:int>/connection/<node_id:int>/",
         views.NetworkConnectionDestroy.as_view(),
         name="network-connection-destroy",
     ),

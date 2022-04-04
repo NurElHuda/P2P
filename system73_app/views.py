@@ -1,3 +1,4 @@
+from ast import Delete
 from django.shortcuts import get_object_or_404, render
 from rest_framework import generics, permissions
 
@@ -12,24 +13,35 @@ class NetworkList(generics.ListCreateAPIView):
     serializer_class = NetworkSerializer
 
 
+class NetworkStatus(generics.RetrieveAPIView):
+
+    def get_object(self):
+        network = get_object_or_404(Node, pk=self.kwargs["network_id"])
+        return network
+
+    # TODO: setup extensive serializer for point 3.
+    serializer_class = NetworkSerializer
+
+
 class NetworkConnectionCreate(generics.CreateAPIView):
 
+    def get_object(self):
+        network = get_object_or_404(Node, pk=self.kwargs["network_id"])
+        return network
 
-    queryset = Network.objects.all()
-    serializer_class = NetworkSerializer
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+    serializer_class = NodeSerializer
 
 
 class NetworkConnectionDestroy(generics.DestroyAPIView):
-
-
     queryset = Network.objects.all()
-    serializer_class = NetworkSerializer
 
+    def get_object(self):
+        node = get_object_or_404(Node, pk=self.kwargs["node_id"])
+        return node
 
-class NetworkStatus(generics.DestroyAPIView):
-
-
-    queryset = Network.objects.all()
     serializer_class = NetworkSerializer
 
 
