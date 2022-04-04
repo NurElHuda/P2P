@@ -12,6 +12,21 @@ urlpatterns = [
         name="network-list",
     ),
     path(
+        "networks/status/",
+        views.NetworkStatus.as_view(),
+        name="network-status",
+    ),
+    path(
+        "networks/connection/",
+        views.NetworkConnectionCreate.as_view(),
+        name="network-connection-destroy",
+    ),
+    path(
+        "networks/connection/",
+        views.NetworkConnectionDestroy.as_view(),
+        name="network-connection-destroy",
+    ),
+    path(
         "trees/",
         views.TreeList.as_view(),
         name="tree-list",

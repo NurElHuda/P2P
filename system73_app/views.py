@@ -12,6 +12,27 @@ class NetworkList(generics.ListCreateAPIView):
     serializer_class = NetworkSerializer
 
 
+class NetworkConnectionCreate(generics.CreateAPIView):
+
+
+    queryset = Network.objects.all()
+    serializer_class = NetworkSerializer
+
+
+class NetworkConnectionDestroy(generics.DestroyAPIView):
+
+
+    queryset = Network.objects.all()
+    serializer_class = NetworkSerializer
+
+
+class NetworkStatus(generics.DestroyAPIView):
+
+
+    queryset = Network.objects.all()
+    serializer_class = NetworkSerializer
+
+
 class TreeList(generics.ListCreateAPIView):
 
 
