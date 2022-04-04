@@ -24,8 +24,8 @@ if __name__ == "__main__":
         raise
 
     # This allows easy placement of apps within the interior
-    # system73_app directory.
+    # p2p_app directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / "system73_app"))
+    sys.path.append(str(current_path / "p2p_app"))
 
     execute_from_command_line(sys.argv)

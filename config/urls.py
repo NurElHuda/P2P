@@ -8,7 +8,7 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="System73 API",
+        title="p2p_app API",
         default_version="v1",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="tinenourelhouda@@gmail.com"),
@@ -20,7 +20,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path("", include("system73_app.urls", namespace="api")),
+    path("", include("p2p_app.urls", namespace="api")),
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),

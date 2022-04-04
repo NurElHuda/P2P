@@ -1,5 +1,5 @@
 """
-WSGI config for system73_app project.
+WSGI config for p2p_app project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
@@ -20,9 +20,9 @@ from pathlib import Path
 from django.core.wsgi import get_wsgi_application
 
 # This allows easy placement of apps within the interior
-# system73_app directory.
+# p2p_app directory.
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
-sys.path.append(str(ROOT_DIR / "system73_app"))
+sys.path.append(str(ROOT_DIR / "p2p_app"))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 # This application object is used by any WSGI server configured to use this

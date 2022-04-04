@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system73_app', '0001_initial'),
+        ('p2p_app', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='node',
             name='parent',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='system73_app.node'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='p2p_app.node'),
         ),
     ]

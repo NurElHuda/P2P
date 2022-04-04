@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class System73AppConfig(AppConfig):
+class p2p_appAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'system73_app'
+    name = 'p2p_app'

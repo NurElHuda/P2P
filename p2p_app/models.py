@@ -19,6 +19,8 @@ class Tree(models.Model):
         "Network",
         related_name="trees",
         on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
 
@@ -33,12 +35,15 @@ class Node(models.Model):
     name = models.CharField(max_length=100)
     host = models.CharField(max_length=64)
     port = models.CharField(max_length=64)
-    capacity = models.CharField(max_length=64)
+    capacity = models.IntegerField(default=0)
+    freespace = models.IntegerField(default=0)
 
     tree = models.ForeignKey(
         "Tree",
         related_name="nodes",
         on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
     parent = models.ForeignKey(
@@ -55,3 +60,11 @@ class Node(models.Model):
 
     def __str__(self):
         return f"Node {self.pk} | {self.name}"
+
+    def save(self, *args, **kwargs):
+        self.freespace = self.capacity - self.children.all().count()
+        return super().save(*args, **kwargs)
+
+    def update_freespace(self):
+        self.freespace = self.capacity - self.children.all().count()
+        self.save()

@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
-APPS_DIR = ROOT_DIR / "system73_app"
+APPS_DIR = ROOT_DIR / "p2p_app"
 
 DEBUG = True
 SECRET_KEY = "g0fh$3_vbd%5(a@f)z5_fbmd%6@ag^8dlrv5-0+n62n_*5iu8b"
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework",
     "django_extensions",
-    "system73_app.apps.System73AppConfig",
+    "p2p_app.apps.p2p_appAppConfig",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

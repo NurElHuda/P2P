@@ -1,8 +1,8 @@
 from django.urls import path
 
-from system73_app import views
+from p2p_app import views
 
-app_name = "system73_app"
+app_name = "p2p_app"
 
 
 urlpatterns = [
@@ -12,17 +12,17 @@ urlpatterns = [
         name="network-list",
     ),
     path(
-        "networks/<network_id:int>/status/",
+        "networks/<int:network_id>/status/",
         views.NetworkStatus.as_view(),
         name="network-status",
     ),
     path(
-        "networks/<network_id:int>/connection/",
+        "networks/<int:network_id>/connection/",
         views.NetworkConnectionCreate.as_view(),
         name="network-connection-create",
     ),
     path(
-        "networks/<network_id:int>/connection/<node_id:int>/",
+        "networks/<int:network_id>/connection/<int:node_id>/",
         views.NetworkConnectionDestroy.as_view(),
         name="network-connection-destroy",
     ),

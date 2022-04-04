@@ -1,9 +1,8 @@
-from ast import Delete
 from django.shortcuts import get_object_or_404, render
 from rest_framework import generics, permissions
 
 from .models import Network, Tree, Node
-from .serializers import NetworkSerializer, TreeSerializer, NodeSerializer
+from .serializers import NetworkSerializer, TreeSerializer, NodeSerializer,NodeConnectSerializer
 
 
 class NetworkList(generics.ListCreateAPIView):
@@ -29,10 +28,11 @@ class NetworkConnectionCreate(generics.CreateAPIView):
         network = get_object_or_404(Node, pk=self.kwargs["network_id"])
         return network
 
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
-
-    serializer_class = NodeSerializer
+    serializer_class = NodeConnectSerializer
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"network_id": self.kwargs.get("network_id")})
+        return context
 
 
 class NetworkConnectionDestroy(generics.DestroyAPIView):

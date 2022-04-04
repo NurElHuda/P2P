@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('network', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='trees', to='system73_app.network')),
+                ('network', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='trees', to='p2p_app.network')),
             ],
             options={
                 'ordering': ['-pk'],
@@ -43,8 +43,8 @@ class Migration(migrations.Migration):
                 ('host', models.CharField(max_length=64)),
                 ('port', models.CharField(max_length=64)),
                 ('capacity', models.CharField(max_length=64)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='children', to='system73_app.node')),
-                ('tree', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='nodes', to='system73_app.tree')),
+                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='children', to='p2p_app.node')),
+                ('tree', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='nodes', to='p2p_app.tree')),
             ],
             options={
                 'ordering': ['-pk'],
