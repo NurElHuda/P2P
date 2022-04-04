@@ -36,5 +36,6 @@ class NodeSerializer(serializers.ModelSerializer):
             "host",
             "port",
             "tree",
+            "parent",
             "children",
         ]

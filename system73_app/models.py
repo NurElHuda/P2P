@@ -45,6 +45,8 @@ class Node(models.Model):
         "self",
         related_name="children",
         on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
 
