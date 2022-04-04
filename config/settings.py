@@ -21,7 +21,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': ':memory:',
+    'NAME': ROOT_DIR / 'db.sqlite3',
   }
 }
 
@@ -148,3 +148,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+# from django.core.management import execute_from_command_line
+# execute_from_command_line(['../manage.py', 'migrate'])
