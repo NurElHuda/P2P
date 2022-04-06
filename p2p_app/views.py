@@ -1,4 +1,7 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
+from django.utils.crypto import get_random_string
+from isort import file
+
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -71,8 +74,9 @@ class NetworkStatus(APIView):
                 dot.edge(str(node.parent.pk), str(node.pk))
                 graph["graph"]["edges"] += {"source": str(node.parent.pk), "target": str(node.pk)},
 
-        dot.render(directory="graphs").replace("\\", "/")
-        return Response(graph, status=200)
+        filename = get_random_string(8)
+        dot.render(filename=filename, directory="p2p_app/media/graphs", cleanup=True).replace("\\", "/")
+        return Response({"json_graph_format": graph, "file": f"http://127.0.0.1:8000/media/graphs/{filename}.png"}, status=200)
 
 
 class TreeList(generics.ListCreateAPIView):

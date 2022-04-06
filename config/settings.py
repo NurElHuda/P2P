@@ -1,8 +1,7 @@
-import os
-from datetime import timedelta
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
+print(ROOT_DIR)
 
 APPS_DIR = ROOT_DIR / "p2p_app"
 
@@ -34,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",  
     "django.contrib.staticfiles",
     "drf_yasg",
     "rest_framework",
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",    
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -68,13 +69,13 @@ PASSWORD_HASHERS = [
 
 STATIC_ROOT = str(ROOT_DIR / "staticfiles")
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [str(APPS_DIR / "static")]
+STATICFILES_DIRS = [str(APPS_DIR / "static"),]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
-MEDIA_ROOT = str(APPS_DIR / "media")
 
+MEDIA_ROOT = str(APPS_DIR / "media")
 MEDIA_URL = "/media/"
 
 TEMPLATES = [
