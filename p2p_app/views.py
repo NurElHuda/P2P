@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from django.utils.crypto import get_random_string
-from isort import file
 
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -43,9 +42,9 @@ class NetworkConnectionCreate(generics.CreateAPIView):
 
 
 class NetworkConnectionDestroy(APIView):
-        """
-            Disconnect a nodefrom the network, then rearrange its tree as a breath first tree
-        """
+    """
+        Disconnect a nodefrom the network, then rearrange its tree as a breath first tree
+    """
 
     def delete(self, request, *args, **kwargs):
         # 1. delete the node

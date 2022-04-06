@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "rest_framework",
-    "django_extensions",
     "p2p_app.apps.p2p_appAppConfig",
 ]
 MIDDLEWARE = [
