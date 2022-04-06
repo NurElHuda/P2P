@@ -57,17 +57,22 @@ class NetworkStatus(APIView):
     def get(self, request, *args, **kwargs):
         network = get_object_or_404(Network, pk=self.kwargs["network_id"])
         trees = network.trees.all()
-        heads = Node.objects.filter(tree__in=trees, parent__isnull=True)
-        nodes = Node.objects.filter(tree__in=trees,)
+        nodes = Node.objects.filter(
+            tree__in=trees,
+        )
 
-        dot = graphviz.Digraph(network.name, format='png')
+        graph = {"graph": {"directed": False, "nodes": {}, "edges": []}}
+        dot = graphviz.Graph(network.name, format="png")
+
         for node in nodes:
             dot.node(str(node.pk))
+            graph["graph"]["nodes"][str(node.pk)] = {}
             if node.parent:
                 dot.edge(str(node.parent.pk), str(node.pk))
+                graph["graph"]["edges"] += {"source": str(node.parent.pk), "target": str(node.pk)},
 
-        dot.render(directory='graphs').replace('\\', '/')
-        return Response({}, status=200)
+        dot.render(directory="graphs").replace("\\", "/")
+        return Response(graph, status=200)
 
 
 class TreeList(generics.ListCreateAPIView):
