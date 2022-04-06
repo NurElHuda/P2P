@@ -31,14 +31,14 @@ class Tree(models.Model):
         return f"Tree {self.pk} | {self.name}"
 
     def rearrange(self):
-        leafs = self.nodes.filter(children__lte=0)
-        for node in leafs:
-            optimal_node = self.objects.exclude(pk=node.pk).filter(freespace__gte=1).order_by("-freespace").first()
-            if optimal_node:
-                node.parent = optimal_node
-                node.save()
-                optimal_node.update_freespace()
+        self.nodes.all().update(parent=None)
+        nodes = self.nodes.all().order_by("-capacity", "freespace")
 
+        for node in nodes:
+            optimal_node = nodes.exclude(pk=node.pk, freespace__lte=0).filter(parent=None).first()
+            if optimal_node:
+                optimal_node.children.add(node)
+                optimal_node.update_freespace()
 
 
 

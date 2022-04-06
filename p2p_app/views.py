@@ -18,12 +18,18 @@ from .serializers import (
 
 
 class NetworkList(generics.ListCreateAPIView):
-
+    """
+        List all networks
+    """
     queryset = Network.objects.all()
     serializer_class = NetworkSerializer
 
 
 class NetworkConnectionCreate(generics.CreateAPIView):
+        """
+            Add a node and connect it to the network
+        """
+
         def get_object(self):
             network = get_object_or_404(Node, pk=self.kwargs["network_id"])
             return network
@@ -37,6 +43,10 @@ class NetworkConnectionCreate(generics.CreateAPIView):
 
 
 class NetworkConnectionDestroy(APIView):
+        """
+            Disconnect a nodefrom the network, then rearrange its tree as a breath first tree
+        """
+
     def delete(self, request, *args, **kwargs):
         # 1. delete the node
         node = get_object_or_404(Node, pk=self.kwargs["node_id"])
@@ -60,6 +70,12 @@ class NetworkConnectionDestroy(APIView):
 
 
 class NetworkStatus(APIView):
+    """
+        Return the status of the network in two format:
+            1. the topology in JSON GRAPH FORMAT
+            2. A graph of the topology in a PNG file.
+    """
+
     def get(self, request, *args, **kwargs):
         network = get_object_or_404(Network, pk=self.kwargs["network_id"])
         trees = network.trees.all()
@@ -71,7 +87,7 @@ class NetworkStatus(APIView):
         dot = graphviz.Graph(network.name, format="png")
 
         for node in nodes:
-            dot.node(str(node.pk))
+            dot.node(str(node.name))
             graph["graph"]["nodes"][str(node.name)] = {}
             if node.parent:
                 dot.edge(str(node.parent.name), str(node.name))
@@ -83,12 +99,18 @@ class NetworkStatus(APIView):
 
 
 class TreeList(generics.ListCreateAPIView):
+    """
+        List all trees
+    """
 
     queryset = Tree.objects.all()
     serializer_class = TreeSerializer
 
 
 class NodeList(generics.ListCreateAPIView):
+    """
+        List all nodes
+    """
 
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
