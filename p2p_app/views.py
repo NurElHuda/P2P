@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, render
-from rest_framework import generics, permissions
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .models import Network, Tree, Node
 from .serializers import NetworkSerializer, TreeSerializer, NodeSerializer,NodeConnectSerializer
@@ -35,14 +37,25 @@ class NetworkConnectionCreate(generics.CreateAPIView):
         return context
 
 
-class NetworkConnectionDestroy(generics.DestroyAPIView):
-    queryset = Network.objects.all()
+class NetworkConnectionDestroy(APIView):
+    def delete(self, request, *args, **kwargs):
+        # 1. delete the node
+        node = get_object_or_404(Node, pk=self.kwargs['node_id'])
+        tree = node.tree
+        network = node.network
 
-    def get_object(self):
-        node = get_object_or_404(Node, pk=self.kwargs["node_id"])
-        return node
+        # Set the parent of this node as the parent of its children
+        children = node.children.all()
+        node.parent.children.add(*children)
 
-    serializer_class = NetworkSerializer
+        # Delete the node
+        node.delete()
+
+
+        # 2. reaarrange the rest of the nodes inside that tree
+        tree.rearrange()
+
+        return Response({}, status=204)
 
 
 class TreeList(generics.ListCreateAPIView):

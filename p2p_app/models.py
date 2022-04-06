@@ -30,6 +30,17 @@ class Tree(models.Model):
     def __str__(self):
         return f"Tree {self.pk} | {self.name}"
 
+    def rearrange(self):
+        leafs = self.nodes.filter(children__count=0)
+        for node in leafs:
+            optimal_node = self.objects.exclude(pk=node.pk).filter(freespace__gte=1).order_by("-freespace").first()
+            if optimal_node:
+                node.parent = optimal_node
+                node.save()
+                optimal_node.update_freespace()
+
+
+
 
 class Node(models.Model):
     name = models.CharField(max_length=100)
