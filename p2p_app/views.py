@@ -24,16 +24,16 @@ class NetworkList(generics.ListCreateAPIView):
 
 
 class NetworkConnectionCreate(generics.CreateAPIView):
-    def get_object(self):
-        network = get_object_or_404(Node, pk=self.kwargs["network_id"])
-        return network
+        def get_object(self):
+            network = get_object_or_404(Node, pk=self.kwargs["network_id"])
+            return network
 
-    serializer_class = NodeConnectSerializer
+        serializer_class = NodeConnectSerializer
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update({"network_id": self.kwargs.get("network_id")})
-        return context
+        def get_serializer_context(self):
+            context = super().get_serializer_context()
+            context.update({"network_id": self.kwargs.get("network_id")})
+            return context
 
 
 class NetworkConnectionDestroy(APIView):
@@ -45,7 +45,10 @@ class NetworkConnectionDestroy(APIView):
 
         # Set the parent of this node as the parent of its children
         children = node.children.all()
-        node.parent.children.add(*children)
+        if node.parent:
+            node.parent.children.add(*children)
+        else:
+            children.update(parent=None)
 
         # Delete the node
         node.delete()
@@ -69,10 +72,10 @@ class NetworkStatus(APIView):
 
         for node in nodes:
             dot.node(str(node.pk))
-            graph["graph"]["nodes"][str(node.pk)] = {}
+            graph["graph"]["nodes"][str(node.name)] = {}
             if node.parent:
-                dot.edge(str(node.parent.pk), str(node.pk))
-                graph["graph"]["edges"] += {"source": str(node.parent.pk), "target": str(node.pk)},
+                dot.edge(str(node.parent.name), str(node.name))
+                graph["graph"]["edges"] += {"source": str(node.parent.name), "target": str(node.name)},
 
         filename = get_random_string(8)
         dot.render(filename=filename, directory="p2p_app/media/graphs", cleanup=True).replace("\\", "/")

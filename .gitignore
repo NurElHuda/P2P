@@ -285,3 +285,4 @@ p2p_app/media/
 .pytest_cache/
 
 
+*sqlite

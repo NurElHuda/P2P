@@ -1,4 +1,4 @@
-import re
+from rest_framework.validators import UniqueValidator
 from django.shortcuts import get_object_or_404
 from django.utils.crypto import get_random_string
 from rest_framework import serializers
@@ -30,6 +30,12 @@ class TreeSerializer(serializers.ModelSerializer):
 
 class NodeSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source="pk", read_only=True)
+    name = serializers.CharField(
+        validators=[
+            UniqueValidator(queryset=Node.objects.all()),
+        ],
+        required=False,
+    )
 
     class Meta:
         model = Node
@@ -50,6 +56,12 @@ class NodeSerializer(serializers.ModelSerializer):
 class NodeConnectSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source="pk", read_only=True)
     network = serializers.PrimaryKeyRelatedField(source="tree.network", read_only=True)
+    name = serializers.CharField(
+        validators=[
+            UniqueValidator(queryset=Node.objects.all()),
+        ],
+        required=False,
+    )
 
     class Meta:
         model = Node
@@ -74,6 +86,7 @@ class NodeConnectSerializer(serializers.ModelSerializer):
             network = Network.objects.get(pk=self.context["network_id"])
         except Network.DoesNotExist:
             network = Network.objects.create(name=f"N-{get_random_string(8)}")
+        print(network)
         attrs["network"] = network
         return attrs
 
@@ -81,7 +94,7 @@ class NodeConnectSerializer(serializers.ModelSerializer):
         network = validated_data.pop("network", None)
         instance = Node.objects.create(**validated_data)
 
-        optimal_node = Node.objects.exclude(pk=instance.pk).filter(freespace__gte=1).order_by("-freespace").first()
+        optimal_node = Node.objects.exclude(pk=instance.pk).filter(tree__network=network, freespace__gte=1).order_by("-freespace").first()
         if optimal_node:
             instance.parent = optimal_node
             instance.tree = optimal_node.tree
