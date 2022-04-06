@@ -31,7 +31,7 @@ class Tree(models.Model):
         return f"Tree {self.pk} | {self.name}"
 
     def rearrange(self):
-        leafs = self.nodes.filter(children__count=0)
+        leafs = self.nodes.filter(children__lte=0)
         for node in leafs:
             optimal_node = self.objects.exclude(pk=node.pk).filter(freespace__gte=1).order_by("-freespace").first()
             if optimal_node:

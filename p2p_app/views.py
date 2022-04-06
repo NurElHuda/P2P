@@ -41,7 +41,7 @@ class NetworkConnectionDestroy(APIView):
         # 1. delete the node
         node = get_object_or_404(Node, pk=self.kwargs["node_id"])
         tree = node.tree
-        network = node.network
+        network = node.tree.network
 
         # Set the parent of this node as the parent of its children
         children = node.children.all()
