@@ -58,17 +58,15 @@ class NetworkStatus(APIView):
         network = get_object_or_404(Network, pk=self.kwargs["network_id"])
         trees = network.trees.all()
         heads = Node.objects.filter(tree__in=trees, parent__isnull=True)
+        nodes = Node.objects.filter(tree__in=trees,)
 
         dot = graphviz.Digraph(network.name, format='png')
-        for node in heads:
-            print(node.name)
-            print(node.children.all())
+        for node in nodes:
             dot.node(str(node.pk))
-            for child in node.children.all():
-                dot.node(str(child.pk))
+            if node.parent:
+                dot.edge(str(node.parent.pk), str(node.pk))
 
         dot.render(directory='graphs').replace('\\', '/')
-
         return Response({}, status=200)
 
 
