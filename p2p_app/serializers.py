@@ -50,6 +50,7 @@ class NodeSerializer(serializers.ModelSerializer):
 class NodeConnectSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source="pk", read_only=True)
     network = serializers.PrimaryKeyRelatedField(source="tree.network", read_only=True)
+
     class Meta:
         model = Node
         fields = [
@@ -58,6 +59,11 @@ class NodeConnectSerializer(serializers.ModelSerializer):
             "host",
             "port",
             "capacity",
+            "parent",
+            "tree",
+            "network",
+        ]
+        read_only_fields = [
             "tree",
             "network",
         ]
@@ -68,7 +74,6 @@ class NodeConnectSerializer(serializers.ModelSerializer):
             network = Network.objects.get(pk=self.context["network_id"])
         except Network.DoesNotExist:
             network = Network.objects.create(name=f"N-{get_random_string(8)}")
-
         attrs["network"] = network
         return attrs
 
@@ -76,7 +81,7 @@ class NodeConnectSerializer(serializers.ModelSerializer):
         network = validated_data.pop("network", None)
         instance = Node.objects.create(**validated_data)
 
-        optimal_node = Node.objects.exclude(pk=instance.pk).filter(freespace__gte=1).order_by("freespace").first()
+        optimal_node = Node.objects.exclude(pk=instance.pk).filter(freespace__gte=1).order_by("-freespace").first()
         if optimal_node:
             instance.parent = optimal_node
             instance.tree = optimal_node.tree
