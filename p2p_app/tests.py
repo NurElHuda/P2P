@@ -43,7 +43,7 @@ class JoinNodeTestCase(TestCase):
         assert res_status.status_code == 200
         res_status_data = res_status.json()
         assert (
-            str(res_node_data["id"])
+            str(res_node_data["name"])
             in res_status_data["json_graph_format"]["graph"]["nodes"]
         )
 
@@ -86,7 +86,7 @@ class LeaveNodeTestCase(TestCase):
                 "name": "N1",
                 "host": "127.0.0.1",
                 "port": "0001",
-                "capacity": 1,
+                "capacity": 3,
             },
         )
         res_node_2 = client.post(

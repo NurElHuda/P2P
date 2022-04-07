@@ -86,7 +86,6 @@ class NodeConnectSerializer(serializers.ModelSerializer):
             network = Network.objects.get(pk=self.context["network_id"])
         except Network.DoesNotExist:
             network = Network.objects.create(name=f"N-{get_random_string(8)}")
-        print(network)
         attrs["network"] = network
         return attrs
 

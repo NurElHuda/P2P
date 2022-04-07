@@ -1,7 +1,6 @@
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
-print(ROOT_DIR)
 
 APPS_DIR = ROOT_DIR / "p2p_app"
 
