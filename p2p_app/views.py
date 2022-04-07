@@ -17,9 +17,19 @@ from .serializers import (
 
 
 class NetworkList(generics.ListCreateAPIView):
-    """
-        List all networks
-    """
+
+    def get(self, request, *args, **kwargs):
+        """
+            List all networks
+        """
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+            Create a new network
+        """
+        return self.create(request, *args, **kwargs)
+
     queryset = Network.objects.all()
     serializer_class = NetworkSerializer
 
@@ -43,7 +53,7 @@ class NetworkConnectionCreate(generics.CreateAPIView):
 
 class NetworkConnectionDestroy(APIView):
     """
-        Disconnect a nodefrom the network, then rearrange its tree as a breath first tree
+        Disconnect a node from the network, then rearrange its tree as a breath first tree
     """
 
     def delete(self, request, *args, **kwargs):
@@ -71,7 +81,7 @@ class NetworkConnectionDestroy(APIView):
 class NetworkStatus(APIView):
     """
         Return the status of the network in two format:
-            1. the topology in JSON GRAPH FORMAT
+            1. The topology in JSON GRAPH FORMAT
             2. A graph of the topology in a PNG file.
     """
 
@@ -98,18 +108,36 @@ class NetworkStatus(APIView):
 
 
 class TreeList(generics.ListCreateAPIView):
-    """
-        List all trees
-    """
+
+    def get(self, request, *args, **kwargs):
+        """
+            List all trees
+        """
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+            Create a new tree
+        """
+        return self.create(request, *args, **kwargs)
 
     queryset = Tree.objects.all()
     serializer_class = TreeSerializer
 
 
 class NodeList(generics.ListCreateAPIView):
-    """
-        List all nodes
-    """
 
+    def get(self, request, *args, **kwargs):
+        """
+            List all nodes
+        """
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+            Create a new node
+        """
+        return self.create(request, *args, **kwargs)
+        
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
